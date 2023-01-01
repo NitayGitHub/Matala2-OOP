@@ -29,4 +29,27 @@ public class Ex2_1 {
 
         return myDir.list();
     }
+
+    public static int getNumOfLines(String[] fileNames) {
+        int count = 0;
+        for (String fileName : fileNames) {
+            try {
+                FileReader fr = new FileReader("C:\\temp\\Ex2\\" + fileName);
+                BufferedReader br = new BufferedReader(fr);
+                String str = br.readLine();
+                while (str != null) {
+                    count++;
+                    str = br.readLine();
+                }
+                br.close();
+                fr.close();
+            } catch (IOException ex) {
+                System.err.println("File read failed");
+                ex.printStackTrace();
+            }
+
+        }
+
+        return count;
+    }
 }
