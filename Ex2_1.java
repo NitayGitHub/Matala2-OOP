@@ -1,10 +1,10 @@
 import java.io.*;
 import java.util.Random;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.CountDownLatch;
 
 public class Ex2_1 {
-    private static AtomicInteger threadsCount = new AtomicInteger();
+    private static final AtomicInteger threadsCount = new AtomicInteger();
 
     public static String[] createTextFiles(int n, int seed, int bound) {
         File myDir = new File("C:\\temp\\Ex2");
@@ -89,6 +89,40 @@ public class Ex2_1 {
             e.printStackTrace();
         }
 
+        res = threadsCount.get();
+        threadsCount.set(0);
+        return res;
+    }
+
+    public static class NOLThreadPool implements Callable<String> {
+        private final String fileName;
+        private final CountDownLatch latch;
+
+        public NOLThreadPool(String fileName, CountDownLatch latch) {
+            this.fileName = fileName;
+            this.latch = latch;
+        }
+        @Override
+        public String call() throws Exception {
+            threadsCount.addAndGet(countFileLines(fileName));
+            latch.countDown();
+            return "called";
+        }
+    }
+
+    public static int getNumOfLinesThreadPool(String[] fileNames){
+        int res;
+        CountDownLatch latch = new CountDownLatch(fileNames.length);
+        ExecutorService pool = Executors.newFixedThreadPool(fileNames.length);
+        for (String fileName : fileNames) {
+            pool.submit(new NOLThreadPool(fileName, latch));
+        }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        pool.shutdown();
         res = threadsCount.get();
         threadsCount.set(0);
         return res;
