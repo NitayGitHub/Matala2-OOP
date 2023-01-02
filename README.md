@@ -4,5 +4,4 @@
 
 ## Variations in the Functions' time complexity!
 
-
-[צילום מסך 2023-01-02 211237](https://user-images.githubusercontent.com/118196923/210272402-1aa713b6-49d5-4c68-bf93-666e965b7d9b.png)
+![צילום מסך 2023-01-02 211237](https://user-images.githubusercontent.com/118196923/210272717-842dc98b-5521-49d6-994a-c7960c549dc9.png)
