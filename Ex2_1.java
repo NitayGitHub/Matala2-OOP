@@ -71,7 +71,7 @@ public class Ex2_1 {
         }
 
         @Override
-        synchronized public void run() {
+        public void run() {
             threadsCount.addAndGet(countFileLines(fileName));
             latch.countDown();
         }
@@ -100,14 +100,15 @@ public class Ex2_1 {
         public NOLThreadPool(String fileName) {
             this.fileName = fileName;
         }
+
         @Override
-        public String call() throws Exception {
+        public String call() {
             threadsCount.addAndGet(countFileLines(fileName));
             return "called";
         }
     }
 
-    public static int getNumOfLinesThreadPool(String[] fileNames){
+    public static int getNumOfLinesThreadPool(String[] fileNames) {
         int res;
         ExecutorService pool = Executors.newFixedThreadPool(fileNames.length);
         for (String fileName : fileNames) {
@@ -115,7 +116,8 @@ public class Ex2_1 {
         }
 
         pool.shutdown();
-        while (!pool.isTerminated()) {}
+        while (!pool.isTerminated()) {
+        }
         res = threadsCount.get();
         threadsCount.set(0);
         return res;
