@@ -96,33 +96,26 @@ public class Ex2_1 {
 
     public static class NOLThreadPool implements Callable<String> {
         private final String fileName;
-        private final CountDownLatch latch;
 
-        public NOLThreadPool(String fileName, CountDownLatch latch) {
+        public NOLThreadPool(String fileName) {
             this.fileName = fileName;
-            this.latch = latch;
         }
         @Override
         public String call() throws Exception {
             threadsCount.addAndGet(countFileLines(fileName));
-            latch.countDown();
             return "called";
         }
     }
 
     public static int getNumOfLinesThreadPool(String[] fileNames){
         int res;
-        CountDownLatch latch = new CountDownLatch(fileNames.length);
         ExecutorService pool = Executors.newFixedThreadPool(fileNames.length);
         for (String fileName : fileNames) {
-            pool.submit(new NOLThreadPool(fileName, latch));
+            pool.submit(new NOLThreadPool(fileName));
         }
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         pool.shutdown();
+        while (!pool.isTerminated()) {}
         res = threadsCount.get();
         threadsCount.set(0);
         return res;
