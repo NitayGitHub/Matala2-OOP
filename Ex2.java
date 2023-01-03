@@ -1,6 +1,6 @@
 
 public class Ex2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /*String[] s = Ex2_1.createTextFiles(500, 1, 100);
         long start1 = System.currentTimeMillis();
         int x = Ex2_1.getNumOfLines(s);
@@ -17,13 +17,18 @@ public class Ex2 {
 
         ///////Part 2///////
 
-        Task<Integer> task = new Task<Integer>(() -> {
+        CustomExecutor customExecutor = new CustomExecutor();
+
+        var task = new Task<Integer>(() -> {
             int sum = 0;
             for (int i = 1; i <= 10; i++) {
                 sum += i;
             }
             return sum;
         }, Task.TaskType.COMPUTATIONAL);
+
+        var sumTask = customExecutor.submit(task);
+        System.out.println(sumTask.get());
 
 
     }
