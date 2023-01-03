@@ -15,5 +15,16 @@ public class Ex2 {
         long end3 = System.currentTimeMillis();
         System.out.println(z + " lines. Elapsed Time for function 4 in milliseconds: " + (end3 - start3));
 
+        ///////Part 2///////
+
+        Task<Integer> task = new Task<Integer>(() -> {
+            int sum = 0;
+            for (int i = 1; i <= 10; i++) {
+                sum += i;
+            }
+            return sum;
+        }, Task.TaskType.COMPUTATIONAL);
+        int Priority = task.getTaskType().getPriorityValue();
+
     }
 }

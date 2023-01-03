@@ -1,18 +1,21 @@
 import java.util.concurrent.*;
 
-public class Task<Type>  implements Callable{
-    Callable c;
-    private TaskType taskType;
+public class Task<Type> implements Callable<Type>{
+    private final Callable<Type> task;
+    private final TaskType taskType;
 
-    public void createTask(Callable c, TaskType taskType){
+    public Task(Callable<Type> task, TaskType taskType){
         this.taskType = taskType;
-        this.c = c;
-
+        this.task = task;
     }
 
     @Override
-    public Object call() throws Exception {
-        return null;
+    public Type call() throws Exception {
+        return task.call();
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
     }
 
     public enum TaskType {
@@ -48,8 +51,7 @@ public class Task<Type>  implements Callable{
         /**
          * priority is represented by an integer value, ranging from 1 to 10 * @param priority * @return whether the priority is valid or not */
         private static boolean validatePriority(int priority){
-            if (priority < 1 || priority >10) return false;
-            return true;
+            return priority >= 1 && priority <= 10;
         }
     }
 
