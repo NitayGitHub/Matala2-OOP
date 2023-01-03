@@ -8,7 +8,7 @@ public class CustomExecutor extends ThreadPoolExecutor {
 
 
     public <T> Future<T> submit(Callable<T> task, Task.TaskType taskType) {
-        var tmpTask = new Task<T>(task, taskType);
+        var tmpTask = new Task<>(task, taskType);
         return this.submit(tmpTask);
     }
 }

@@ -23,7 +23,7 @@ public class Ex2 {
 
         CustomExecutor customExecutor = new CustomExecutor();
 
-        var task = new Task<Integer>(() -> {
+        var task = new Task<>(() -> {
             int sum = 0;
             for (int i = 1; i <= 10; i++) {
                 sum += i;
