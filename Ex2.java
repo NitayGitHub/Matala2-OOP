@@ -1,3 +1,7 @@
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class Ex2 {
     public static void main(String[] args) throws Exception {
@@ -15,7 +19,7 @@ public class Ex2 {
         long end3 = System.currentTimeMillis();
         System.out.println(z + " lines. Elapsed Time for function 4 in milliseconds: " + (end3 - start3));*/
 
-        ///////Part 2///////
+        ///////Part 2 - Test///////
 
         CustomExecutor customExecutor = new CustomExecutor();
 
@@ -28,7 +32,24 @@ public class Ex2 {
         }, Task.TaskType.COMPUTATIONAL);
 
         var sumTask = customExecutor.submit(task);
-        System.out.println(sumTask.get());
+        final int sum;
+        try {
+            sum = sumTask.get(1, TimeUnit.MILLISECONDS);
+            System.out.println("Sum of 1 through 10 = " + sum);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            throw new RuntimeException(e);
+        }
+        Callable<Double> callable1 = () -> {
+            return 1000 * Math.pow(1.02, 5);
+        };
+        Callable<String> callable2 = () -> {
+            StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            return sb.reverse().toString();
+        };
+        var priceTask = customExecutor.submit(() -> {
+            return 1000 * Math.pow(1.02, 5);
+        }, Task.TaskType.COMPUTATIONAL);
+        var reverseTask = customExecutor.submit(callable2, Task.TaskType.IO);
 
 
     }
