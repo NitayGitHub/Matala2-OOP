@@ -1,11 +1,14 @@
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.Objects;
+import java.util.concurrent.*;
 
-public class CustomExecutor{
+public class CustomExecutor {
     private final int cores = Runtime.getRuntime().availableProcessors();
-    private final PriorityBlockingQueue<Integer> queue = new PriorityBlockingQueue<>();
+    private final PriorityBlockingQueue<Task<Object>> queue = new PriorityBlockingQueue<>();
+    private final ExecutorService tasksPoll = Executors.newFixedThreadPool(cores - 1);
 
-    public static Object submit(Task<Object> task) throws Exception {
-        return task.call();
+    public Object submit(Task<Object> task) throws Exception {
+        queue.add(task);
+        return tasksPoll.submit(Objects.requireNonNull(queue.poll()));
 
     }
 

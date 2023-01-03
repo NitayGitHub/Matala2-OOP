@@ -1,7 +1,7 @@
 
 public class Ex2 {
     public static void main(String[] args) {
-        String[] s = Ex2_1.createTextFiles(500, 1, 100);
+        /*String[] s = Ex2_1.createTextFiles(500, 1, 100);
         long start1 = System.currentTimeMillis();
         int x = Ex2_1.getNumOfLines(s);
         long end1 = System.currentTimeMillis();
@@ -13,7 +13,7 @@ public class Ex2 {
         long start3 = System.currentTimeMillis();
         int z = Ex2_1.getNumOfLinesThreadPool(s);
         long end3 = System.currentTimeMillis();
-        System.out.println(z + " lines. Elapsed Time for function 4 in milliseconds: " + (end3 - start3));
+        System.out.println(z + " lines. Elapsed Time for function 4 in milliseconds: " + (end3 - start3));*/
 
         ///////Part 2///////
 
@@ -24,7 +24,7 @@ public class Ex2 {
             }
             return sum;
         }, Task.TaskType.COMPUTATIONAL);
-        int Priority = task.getTaskType().getPriorityValue();
+
 
     }
 }
