@@ -1,6 +1,6 @@
 import java.util.concurrent.*;
 
-public class Task<Type> {
+public class Task<Type>  implements Callable{
     Callable c;
     private TaskType taskType;
 
@@ -8,6 +8,11 @@ public class Task<Type> {
         this.taskType = taskType;
         this.c = c;
 
+    }
+
+    @Override
+    public Object call() throws Exception {
+        return null;
     }
 
     public enum TaskType {
