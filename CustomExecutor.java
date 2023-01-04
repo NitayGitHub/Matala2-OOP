@@ -3,8 +3,9 @@ import java.util.concurrent.*;
 
 public class CustomExecutor extends ThreadPoolExecutor {
     private static int cores = Runtime.getRuntime().availableProcessors();
+
     public CustomExecutor() {
-        super(cores/2, cores - 1, 0L, TimeUnit.MILLISECONDS,
+        super(cores / 2, cores - 1, 300L, TimeUnit.MILLISECONDS,
                 new PriorityBlockingQueue<>(10, new PriorityQueueComparator()), new PriorityThreadFactory());
     }
 

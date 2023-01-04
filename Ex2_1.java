@@ -13,10 +13,10 @@ public class Ex2_1 {
         Random rand = new Random(seed);
 
         for (int i = 1; i <= n; i++) {
-            File newFile = new File("C:\\temp\\Ex2\\newFile" + i + ".txt");
+            File newFile = new File("C:\\temp\\Ex2\\File_" + i + ".txt");
             try {
                 boolean wasFileMade = newFile.createNewFile();
-                FileWriter fw = new FileWriter("C:\\temp\\Ex2\\newFile" + i + ".txt");
+                FileWriter fw = new FileWriter("C:\\temp\\Ex2\\File_" + i + ".txt");
                 PrintWriter outs = new PrintWriter(fw);
                 linesCount = rand.nextInt(bound);
                 for (int j = 0; j < linesCount; j++) {
