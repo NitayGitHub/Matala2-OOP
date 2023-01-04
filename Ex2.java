@@ -1,7 +1,5 @@
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
+
 
 public class Ex2 {
     public static void main(String[] args) throws Exception {
@@ -23,7 +21,7 @@ public class Ex2 {
 
         CustomExecutor customExecutor = new CustomExecutor();
 
-        var task = new Task<>(() -> {
+        Task<Integer> task = new Task<>(() -> {
             int sum = 0;
             for (int i = 1; i <= 10; i++) {
                 sum += i;
@@ -31,7 +29,7 @@ public class Ex2 {
             return sum;
         }, Task.TaskType.COMPUTATIONAL);
 
-        var sumTask = customExecutor.submit(task);
+        Future<Integer> sumTask = customExecutor.submit(task);
         final int sum;
         try {
             sum = sumTask.get(1, TimeUnit.MILLISECONDS);
@@ -39,6 +37,7 @@ public class Ex2 {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
+
         Callable<Double> callable1 = () -> {
             return 1000 * Math.pow(1.02, 5);
         };
@@ -46,11 +45,9 @@ public class Ex2 {
             StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             return sb.reverse().toString();
         };
-        var priceTask = customExecutor.submit(() -> {
-            return 1000 * Math.pow(1.02, 5);
-        }, Task.TaskType.COMPUTATIONAL);
-        var reverseTask = customExecutor.submit(callable2, Task.TaskType.IO);
 
+        Future<Double> priceTask = customExecutor.submit(callable1, Task.TaskType.COMPUTATIONAL);
+        Future<String> reverseTask = customExecutor.submit(callable2, Task.TaskType.IO);
 
     }
 }

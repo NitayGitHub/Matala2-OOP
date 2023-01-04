@@ -1,6 +1,6 @@
 import java.util.concurrent.*;
 
-public class Task<Type> implements Callable<Type>, Comparable<Task<Type>> {
+public class Task<Type> implements Callable<Type> {
     private final Callable<Type> task;
     private final TaskType taskType;
 
@@ -16,11 +16,6 @@ public class Task<Type> implements Callable<Type>, Comparable<Task<Type>> {
 
     public TaskType getTaskType() {
         return taskType;
-    }
-
-    @Override
-    public int compareTo(Task t) {
-        return this.taskType.compareTo(t.getTaskType());
     }
 
     public enum TaskType {
