@@ -46,6 +46,10 @@ public class Ex2 {
             return sb.reverse().toString();
         };
 
+        PriorityQueueComparator pqc = new PriorityQueueComparator<>();
+        int x = pqc.compare(task, new Task<>(callable2, Task.TaskType.IO));
+        System.out.println(x);
+
         Future<Double> priceTask = customExecutor.submit(callable1, Task.TaskType.COMPUTATIONAL);
         Future<String> reverseTask = customExecutor.submit(callable2, Task.TaskType.IO);
 

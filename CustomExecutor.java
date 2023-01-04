@@ -2,8 +2,9 @@ import java.util.Comparator;
 import java.util.concurrent.*;
 
 public class CustomExecutor extends ThreadPoolExecutor {
+    private static int cores = Runtime.getRuntime().availableProcessors();
     public CustomExecutor() {
-        super(2, (Runtime.getRuntime().availableProcessors()) - 1, 0L, TimeUnit.MILLISECONDS,
+        super(cores/2, cores - 1, 0L, TimeUnit.MILLISECONDS,
                 new PriorityBlockingQueue<>(10, new PriorityQueueComparator()), new PriorityThreadFactory());
     }
 
@@ -24,6 +25,12 @@ class PriorityThreadFactory implements ThreadFactory {
 class PriorityQueueComparator<Type> implements Comparator<Task<Type>> {
     @Override
     public int compare(Task<Type> task1, Task<Type> task2) {
-        return Integer.compare(task2.getTaskType().getPriorityValue(), task1.getTaskType().getPriorityValue());
+        if (task1.getTaskType().getPriorityValue() < task2.getTaskType().getPriorityValue()) {
+            return -1;
+        }
+        if (task1.getTaskType().getPriorityValue() > task2.getTaskType().getPriorityValue()) {
+            return 1;
+        }
+        return 0;
     }
 }
