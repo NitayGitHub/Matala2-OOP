@@ -49,10 +49,8 @@ public class Ex2 {
         };
         Future<Double> priceTask = customExecutor.submit(callable1, Task.TaskType.COMPUTATIONAL);
         Future<String> reverseTask = customExecutor.submit(callable2, Task.TaskType.IO);
-
         final Double totalPrice;
         final String reversed;
-
         try {
             totalPrice = priceTask.get();
             reversed = reverseTask.get();
@@ -62,7 +60,7 @@ public class Ex2 {
         System.out.println("Reversed String = " + reversed);
         System.out.println("Total Price = " + totalPrice);
         System.out.println("Current maximum priority = " + customExecutor.getCurrentMax());
-
+        customExecutor.gracefullyTerminate();
 
     }
 }

@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 
 public class CustomExecutor extends ThreadPoolExecutor {
     private static final int cores = Runtime.getRuntime().availableProcessors();
-    private static final AtomicIntegerArray threadTypeCount = new AtomicIntegerArray(4);
+    private final AtomicIntegerArray threadTypeCount = new AtomicIntegerArray(4);
 
     public CustomExecutor() {
         super(cores / 2, cores - 1, 300L, TimeUnit.MILLISECONDS,
@@ -16,7 +16,8 @@ public class CustomExecutor extends ThreadPoolExecutor {
         threadTypeCount.incrementAndGet(typeNum);
         Future<T> res = this.submit(new Task<>(task, taskType));
         this.submit(new Task<>(() -> {
-            while (!res.isDone()) {}
+            while (!res.isDone()) {
+            }
             threadTypeCount.decrementAndGet(typeNum);
             return 1;
         }, taskType));
@@ -24,7 +25,7 @@ public class CustomExecutor extends ThreadPoolExecutor {
     }
 
 
-    public static int getCurrentMax() {
+    public int getCurrentMax() {
         if (threadTypeCount.get(0) != 0) {
             return 0;
         } else if (threadTypeCount.get(1) != 0) {
@@ -33,6 +34,12 @@ public class CustomExecutor extends ThreadPoolExecutor {
             return 2;
         }
         return 2;
+    }
+
+    public void gracefullyTerminate() {
+        this.shutdown();
+        while (!this.isTerminated()) {
+        }
     }
 }
 
