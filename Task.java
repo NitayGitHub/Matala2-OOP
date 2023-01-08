@@ -14,6 +14,11 @@ public class Task<Type> implements Callable<Type> {
         return task.call();
     }
 
+    public static <Type> Task<Type> createTask(Callable<Type> task, TaskType taskType) {
+        return new Task<Type>(task, taskType);
+    }
+
+
     public TaskType getTaskType() {
         return taskType;
     }

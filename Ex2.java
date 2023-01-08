@@ -24,8 +24,7 @@ public class Ex2 {
         ///////Part 2 - Test///////
 
         CustomExecutor customExecutor = new CustomExecutor();
-
-        Task<Integer> task = new Task<>(() -> {
+        Task<Integer> task = Task.createTask(() -> {
             int sum = 0;
             for (int i = 1; i <= 10; i++) {
                 sum += i;
