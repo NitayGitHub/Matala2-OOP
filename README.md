@@ -39,5 +39,9 @@ The method without threads was the slowest because there is a single process tha
 Why using a thread pool was faster than manually creating threads?<br>
 Well, the thread pool reuses its threads to perform the work you'd like to get done. Creating a single new thread takes about 1MB of memory, which you are avoiding by reusing threads via a thread pool. Also, creating and destroying a thread has setup and teardown costs (it takes CPU time). After a thread pool thread finishes executing your task, it returns to the thread pool (it is not destroyed) so that it can pick up the next available task. A thread pool creates a new thread only if it does not have a thread to execute a newly queued task; it can help indirectly to keep the number of threads to be as close as the number of CPUs.
 
-## Class Diagram
+## Ex2_1 Class Diagram
 ![WhatsApp_2023-01-04_00 18 55_50](https://user-images.githubusercontent.com/118196923/210634669-1c48fcdf-744a-44cc-9896-5fd070598c63.jpg)
+
+## Part B Classes Description
+
+## Task & CustomExecutor Classes Diagram
