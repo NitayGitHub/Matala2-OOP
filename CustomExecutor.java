@@ -1,8 +1,10 @@
 import java.util.Comparator;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 
 public class CustomExecutor extends ThreadPoolExecutor {
-    private static int cores = Runtime.getRuntime().availableProcessors();
+    private static final int cores = Runtime.getRuntime().availableProcessors();
+    private static final AtomicIntegerArray threadTypeCount = new AtomicIntegerArray(4);
 
     public CustomExecutor() {
         super(cores / 2, cores - 1, 300L, TimeUnit.MILLISECONDS,
@@ -10,9 +12,30 @@ public class CustomExecutor extends ThreadPoolExecutor {
     }
 
     public <T> Future<T> submit(Callable<T> task, Task.TaskType taskType) throws Exception {
-        return this.submit(new Task<>(task, taskType));
+        int typeNum = taskType.getPriorityValue();
+        threadTypeCount.incrementAndGet(typeNum);
+        Future<T> res = this.submit(new Task<>(task, taskType));
+        this.submit(new Task<>(() -> {
+            while (!res.isDone()) {}
+            threadTypeCount.decrementAndGet(typeNum);
+            return 1;
+        }, taskType));
+        return res;
+    }
+
+
+    public static int getCurrentMax() {
+        if (threadTypeCount.get(0) != 0) {
+            return 0;
+        } else if (threadTypeCount.get(1) != 0) {
+            return 1;
+        } else if (threadTypeCount.get(2) != 0) {
+            return 2;
+        }
+        return 2;
     }
 }
+
 
 class PriorityThreadFactory implements ThreadFactory {
     @Override
