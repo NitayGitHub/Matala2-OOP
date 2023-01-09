@@ -26,14 +26,14 @@ public class CustomExecutor extends ThreadPoolExecutor {
 
 
     public int getCurrentMax() {
-        if (threadTypeCount.get(0) != 0) {
-            return 0;
-        } else if (threadTypeCount.get(1) != 0) {
+        if (threadTypeCount.get(1) != 0) {
             return 1;
         } else if (threadTypeCount.get(2) != 0) {
             return 2;
+        } else if (threadTypeCount.get(3) != 0) {
+            return 3;
         }
-        return 2;
+        return -1;
     }
 
     public void gracefullyTerminate() {
