@@ -43,5 +43,16 @@ Well, the thread pool reuses its threads to perform the work you'd like to get d
 ![WhatsApp_2023-01-04_00 18 55_50](https://user-images.githubusercontent.com/118196923/210634669-1c48fcdf-744a-44cc-9896-5fd070598c63.jpg)
 
 ## Part B Classes Description
+At the second part of the assignment, we create a new type that represents an asynchronous task with priority and a new ThreadPool type that supports owning tasks
+priority.
 
-## Task & CustomExecutor Classes Diagram
+### Task class
+The Task class - represents an operation that can be run asynchronously and can return a value of some type (that is, it will be defined as a generic return type). It is not necessary for the operation to succeed and in case of failure, an exception will be thrown.<br>
+
+### CustomExecuter class
+A custom thread pool class that defines a method for submitting a generic task to a priority queue, and a method for submitting a generic task created by a
+Callable(V) and a Type, passed as arguments. <br>
+
+## Part_B Diagrama
+![Diagram_partB](https://user-images.githubusercontent.com/117055432/211330037-0be3407b-6979-4afa-885f-8f7bd10526de.png)
+
