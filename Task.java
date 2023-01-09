@@ -28,6 +28,10 @@ public class Task<Type> implements Callable<Type> {
         return taskType;
     }
 
+    public Callable<Type> getCallable() {
+        return task;
+    }
+
     public enum TaskType {
         COMPUTATIONAL(1) {
             @Override

@@ -8,14 +8,14 @@ public class CustomExecutor extends ThreadPoolExecutor {
 
     public CustomExecutor() {
         super(cores / 2, cores - 1, 300L, TimeUnit.MILLISECONDS,
-                new PriorityBlockingQueue<>(10, new PriorityQueueComparator()), new PriorityThreadFactory());
+                new PriorityBlockingQueue<Runnable>(10, new PriorityQueueComparator()), new PriorityThreadFactory());
     }
 
-    public <T> Future<T> submit(Callable<T> task, Task.TaskType taskType) {
+    public <T> Future<T> submit(Callable<T> task, Task.TaskType taskType){
         int typeNum = taskType.getPriorityValue();
         threadTypeCount.incrementAndGet(typeNum);
-        Future<T> res = this.submit(new Task<>(task, taskType));
-        this.submit(new Task<>(() -> {
+        Future<T> res = super.submit(new Task<>(task, taskType));
+        super.submit(new Task<>(() -> {
             while (!res.isDone()) {
             }
             threadTypeCount.decrementAndGet(typeNum);
@@ -24,18 +24,13 @@ public class CustomExecutor extends ThreadPoolExecutor {
         return res;
     }
 
-    public <T> Future<T> submit(Callable<T> task) {
-        threadTypeCount.incrementAndGet(3);
-        Future<T> res = this.submit(new Task<>(task, Task.TaskType.OTHER));
-        this.submit(new Task<>(() -> {
-            while (!res.isDone()) {
-            }
-            threadTypeCount.decrementAndGet(3);
-            return 1;
-        }, Task.TaskType.OTHER));
-        return res;
+    public <T> Future<T> submit(Task<T> task){
+        return this.submit(task.getCallable(), task.getTaskType());
     }
-
+    @Override
+    public <T> Future<T> submit(Callable<T> callable){
+        return this.submit(callable, Task.TaskType.IO);
+    }
 
     public int getCurrentMax() {
         if (threadTypeCount.get(1) != 0) {
