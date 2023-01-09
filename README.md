@@ -110,4 +110,6 @@ Callable(V) and a Type, passed as arguments. <br>
   **Output:**<br>
   A new customexecutor.<br><br>
     
-## Ex2_1 Class Diagram
+## Part_B Diagrama
+![Diagram_partB](https://user-images.githubusercontent.com/117055432/211330037-0be3407b-6979-4afa-885f-8f7bd10526de.png)
+
