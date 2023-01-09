@@ -109,3 +109,5 @@ Callable(V) and a Type, passed as arguments. <br>
 
   **Output:**<br>
   A new customexecutor.<br><br>
+    
+## Ex2_1 Class Diagram
