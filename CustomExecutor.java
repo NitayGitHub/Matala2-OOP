@@ -11,7 +11,7 @@ public class CustomExecutor extends ThreadPoolExecutor {
                 new PriorityBlockingQueue<>(10, new PriorityQueueComparator()), new PriorityThreadFactory());
     }
 
-    public <T> Future<T> submit(Callable<T> task, Task.TaskType taskType) throws Exception {
+    public <T> Future<T> submit(Callable<T> task, Task.TaskType taskType) {
         int typeNum = taskType.getPriorityValue();
         threadTypeCount.incrementAndGet(typeNum);
         Future<T> res = this.submit(new Task<>(task, taskType));
@@ -21,6 +21,18 @@ public class CustomExecutor extends ThreadPoolExecutor {
             threadTypeCount.decrementAndGet(typeNum);
             return 1;
         }, taskType));
+        return res;
+    }
+
+    public <T> Future<T> submit(Callable<T> task) {
+        threadTypeCount.incrementAndGet(3);
+        Future<T> res = this.submit(new Task<>(task, Task.TaskType.OTHER));
+        this.submit(new Task<>(() -> {
+            while (!res.isDone()) {
+            }
+            threadTypeCount.decrementAndGet(3);
+            return 1;
+        }, Task.TaskType.OTHER));
         return res;
     }
 

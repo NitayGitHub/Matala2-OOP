@@ -9,6 +9,11 @@ public class Task<Type> implements Callable<Type> {
         this.task = task;
     }
 
+    public Task(Callable<Type> task) {
+        this.taskType = TaskType.OTHER;
+        this.task = task;
+    }
+
     @Override
     public Type call() throws Exception {
         return task.call();
