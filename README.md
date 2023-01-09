@@ -46,70 +46,13 @@ Well, the thread pool reuses its threads to perform the work you'd like to get d
 At the second part of the assignment, we create a new type that represents an asynchronous task with priority and a new ThreadPool type that supports owning tasks
 priority.
 
-## Task class
+### Task class
 The Task class - represents an operation that can be run asynchronously and can return a value of some type (that is, it will be defined as a generic return type). It is not necessary for the operation to succeed and in case of failure, an exception will be thrown.<br>
-### The fields are:<br>
-**Callable(Type)**  task - the task which will be performed.<br>
-**TaskType**  taskType - the type of the task i.e: COMPUTATIONAL, I/O, OTHER.
 
-
-## Class functions<br>
-- ### Task(Callable<Type> task, TaskType taskType)<br>
-    This function used as a constructor for task. <br><br>
-
-    **Input:**<br>
-    task - an operation.<br>
-    taskType - the type of the task.<br><br>
-
-    **Output:**<br>
-    A new generic task.<br>
-
-- ### Task createTask(Callable<Type> task, TaskType taskType)<br>
-    This function creates a task instance.<br><br>
-
-    **Input:**<br>
-    task - Java's built-in type of task that can be executed asynchronously with a return value.<br>
-    taskType - the type of the task.<br>
-
-    **(Note: if the TaskType wasn't given the TaskType value will be set as a default)**<br><br>
-    **Output:**<br>
-    A new Task.<br>
-
-
-- ###  call() throws Exception<br>
-    This function computes a result, or throws an exception if unable to do so.<br>
-
-- ### TaskType getTaskType()<br>
-    This function return the TaskType of the task.<br><br>
-
-    **Output:**<br>
-The TaskType of the task.<br>
-
-## CustomExecuter class
+### CustomExecuter class
 A custom thread pool class that defines a method for submitting a generic task to a priority queue, and a method for submitting a generic task created by a
 Callable(V) and a Type, passed as arguments. <br>
 
-### The fields are:<br>
-**Int**  cores - the amount of available cores for JVM.<br>
-**Int[]** threadTypeCount - an array which counts the number of threads from each priority that were submitted.<br>
-
-## Class functions<br>
-- ### CustomExecutor()<br>
-  This function creates a customexecutor instance by initial the following values:<br><br>
-  
-  **Input:**<br>
-  *corePoolSize* – the number of threads to keep in the pool.<br>
-  *maximumPoolSize* – the maximum number of threads to allow in the pool.<br>
-  *keepAliveTime* – when the number of threads is greater than the core,<br> 
-                  this is the maximum time that excess idle threads will wait for new tasks before terminating.<br>
-  *unit* – the time unit for the keepAliveTime argument.<br>
-  *workQueue* – the queue to use for holding tasks before they are executed.<br>
-              This queue will hold only the Runnable tasks submitted by the execute method.<br>
-  *threadFactory* – the factory to use when the executor creates a new thread.<br><br>
-
-  **Output:**<br>
-  A new customexecutor.<br><br>
-    
 ## Part_B Diagrama
 ![Diagram_partB](https://user-images.githubusercontent.com/117055432/211330037-0be3407b-6979-4afa-885f-8f7bd10526de.png)
 
