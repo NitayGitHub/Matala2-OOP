@@ -1,4 +1,3 @@
-package Matala_2;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.logging.Logger;
