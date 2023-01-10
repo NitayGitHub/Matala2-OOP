@@ -54,7 +54,7 @@ public class CustomExecutor extends ThreadPoolExecutor {
     // task- new operation to be performed.
     // @output
     // a Future representing pending completion of the task
-    
+    /*
     public <T> Future<T> submit(Task<T> task){
         return this.submit(task.getCallable(), task.getTaskType());
     }
@@ -68,7 +68,7 @@ public class CustomExecutor extends ThreadPoolExecutor {
     @Override
     public <T> Future<T> submit(Callable<T> callable){
         return this.submit(callable, Task.TaskType.IO);
-    }
+    }*/
     
     // This function return the maximum priority of Task instances in the queue at any given time.
     // @output
