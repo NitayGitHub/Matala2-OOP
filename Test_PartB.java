@@ -4,7 +4,7 @@ import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import java.util.concurrent.*;
 
-public class Tests {
+public class Test_PartB {
     public static final Logger logger = LoggerFactory.getLogger(Tests.class);
     @Test
     public void partialTest(){
