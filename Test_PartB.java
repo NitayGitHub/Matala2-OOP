@@ -5,7 +5,7 @@ import org.junit.platform.commons.logging.LoggerFactory;
 import java.util.concurrent.*;
 
 public class Test_PartB {
-    public static final Logger logger = LoggerFactory.getLogger(Tests.class);
+    public static final Logger logger = LoggerFactory.getLogger(Test.class);
     @Test
     public void partialTest(){
         CustomExecutor customExecutor = new CustomExecutor();
